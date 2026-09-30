@@ -52,7 +52,19 @@ ninja.data = [{
             window.open("https://medium.com/@al-folio/displaying-external-posts-on-your-al-folio-blog-b60a1d241a0a?source=rss-17feae71c3c4------2", "_blank");
           
         },
-      },{
+      },{id: "news-a-paper-on-reducing-over-smoothing-in-graph-neural-networks-via-the-kuramoto-model-is-accepted-at-aistats-2024",
+          title: 'A paper on reducing over-smoothing in graph neural networks via the Kuramoto model...',
+          description: "",
+          section: "News",},{id: "news-i-started-my-phd-in-computer-science-at-the-university-of-warwick-supervised-by-prof-long-tran-thanh",
+          title: 'I started my PhD in Computer Science at the University of Warwick, supervised...',
+          description: "",
+          section: "News",},{id: "news-a-paper-on-inference-time-safety-alignment-of-black-box-llms-is-accepted-at-icml-2026",
+          title: 'A paper on inference-time safety alignment of black-box LLMs is accepted at ICML...',
+          description: "",
+          section: "News",},{id: "news-a-paper-on-training-free-cultural-alignment-of-llms-via-persona-disagreement-is-accepted-at-neurips-2026",
+          title: 'A paper on training-free cultural alignment of LLMs via persona disagreement is accepted...',
+          description: "",
+          section: "News",},{
         id: 'social-email',
         title: 'email',
         section: 'Socials',
