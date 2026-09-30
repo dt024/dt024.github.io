@@ -13,7 +13,7 @@ profile:
     <p>University of Warwick</p>
     <p>Coventry, United Kingdom</p>
 
-selected_papers: false # turn on once _bibliography/papers.bib holds your own papers marked selected={true}
+selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
 
 announcements:

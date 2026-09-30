@@ -1,9 +1,11 @@
-"AJP":
-  url: https://aapt.scitation.org/journal/ajp
-  color: "#00369f"
+"NeurIPS":
+  url: https://neurips.cc/
 
-"PhysRev":
-  url: https://journals.aps.org/
+"ICML":
+  url: https://icml.cc/
 
-"Vision":
-  color: "#009f36"
+"AISTATS":
+  url: https://aistats.org/
+
+"NeurIPS-W":
+  url: https://sites.google.com/view/tglworkshop-2023
