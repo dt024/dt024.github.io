@@ -6,7 +6,7 @@ subtitle: PhD student, Department of Computer Science, <a href='https://warwick.
 
 profile:
   align: right
-  image: prof_pic.jpg
+  image: tuan_nguyen.jpg
   image_circular: false # crops the image to make it circular
   more_info: >
     <p>CS3.16 @ Department of Computer Science</p>
