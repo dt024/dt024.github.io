@@ -9,7 +9,7 @@ profile:
   image: # headshot filename in assets/img/ (e.g. prof_pic.jpg)
   image_circular: false # crops the image to make it circular
   more_info: >
-    <p>Department of Computer Science</p>
+    <p>CS3.16 @ Department of Computer Science</p>
     <p>University of Warwick</p>
     <p>Coventry, United Kingdom</p>
 
