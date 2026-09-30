@@ -8,4 +8,4 @@ github_username: dt024 # your GitHub user name
 # linkedin_username: # your LinkedIn user name
 # x_username: # your X (formerly Twitter) user name
 # cv_pdf: /assets/pdf/cv.pdf # path to your CV PDF file
-# rss_icon: true # uncomment once the blog has posts
+rss_icon: true # comment this line to hide the RSS icon
