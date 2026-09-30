@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Safety Game: teaching a black-box LLM when to say more, and when to say less"
-date: 2026-09-30
+date: 2026-07-21
 description: How an idea from poker-playing AI lets us make any LLM safer at inference time, with no retraining and no access to its weights.
 tags: llm-safety game-theory alignment
 categories: research
