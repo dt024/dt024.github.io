@@ -30,7 +30,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/blog/";
           },
-        },{id: "post-safety-game-teaching-a-black-box-llm-when-to-say-more-and-when-to-say-less",
+        },{id: "post-steering-llms-across-cultures-by-listening-to-disagreement",
+        
+          title: "Steering LLMs across cultures by listening to disagreement",
+        
+        description: "How four survey-grounded personas, and the disagreement between them, steer a frozen LLM toward a country&#39;s moral preferences without retraining.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/disca/";
+          
+        },
+      },{id: "post-safety-game-teaching-a-black-box-llm-when-to-say-more-and-when-to-say-less",
         
           title: "Safety Game: teaching a black-box LLM when to say more, and when to...",
         
