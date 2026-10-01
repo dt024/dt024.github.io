@@ -27,7 +27,7 @@
   const ETA = 0.05;
   const GATE_SCALE = 0.6;
   const DOMAIN = [-2, 2];
-  const MODEL_DEFAULT = 1.7;
+  const MODEL_DEFAULT = 0.2;
 
   const PERSONAS = [
     { id: "young", name: "Young adults" },
@@ -37,9 +37,9 @@
   ];
 
   const PRESETS = {
-    start: [1.1, 0.8, 0.2, 0.7],
-    agree: [0.9, 0.9, 0.9, -0.1],
-    split: [1.6, 1.4, -1.4, 0.0],
+    start: [1.0, 0.8, 0.3, 0.6],
+    agree: [1.0, 1.0, 0.1, 0.3],
+    split: [1.0, 0.8, -1.8, -1.0],
   };
 
   function lossAverse(z) {
@@ -136,16 +136,6 @@
     layer.appendChild(el("line", { class: "dc-consensus", x1: px(result.consensus), x2: px(result.consensus), y1: top, y2: rowY(ROWS.final) }));
     layer.appendChild(el("text", { class: "dc-consensus-label", x: px(result.consensus) + 6, y: bottom + 4 }, "plain average"));
     const fy = rowY(ROWS.final);
-    layer.appendChild(
-      el("line", {
-        class: "dc-move",
-        x1: px(MODEL_DEFAULT),
-        x2: px(result.final) + (result.final < MODEL_DEFAULT ? 9 : -9),
-        y1: fy,
-        y2: fy,
-        "marker-end": "url(#dc-arrow)",
-      })
-    );
     const proposedX = px(result.consensus + result.proposed);
     layer.appendChild(el("line", { class: "dc-dropped", x1: px(result.final), x2: proposedX, y1: fy, y2: fy }));
     const proposed = el("circle", { class: "dc-proposed", cx: proposedX, cy: fy, r: 8 });
@@ -154,7 +144,6 @@
     const final = el("circle", { class: "dc-final", cx: px(result.final), cy: fy, r: 9 });
     final.appendChild(el("title", {}, "DISCA's answer"));
     layer.appendChild(final);
-    layer.appendChild(el("path", { class: "dc-default dc-default--ghost", d: diamond(px(MODEL_DEFAULT), fy, 7) }));
   }
 
   function makeHandle(svg, index, getPositions, onChange) {
@@ -213,19 +202,6 @@
     let positions = [...PRESETS.start];
     const svg = el("svg", { viewBox: `0 0 ${P.w} ${P_H}`, role: "group", "aria-labelledby": "dc-panel-title" });
     svg.appendChild(el("title", { id: "dc-panel-title" }, "Four draggable personas, their consensus, and the steered answer"));
-    const defs = el("defs");
-    const marker = el("marker", {
-      id: "dc-arrow",
-      viewBox: "0 0 10 10",
-      refX: "8",
-      refY: "5",
-      markerWidth: "7",
-      markerHeight: "7",
-      orient: "auto-start-reverse",
-    });
-    marker.appendChild(el("path", { class: "dc-arrowhead", d: "M0,0 L10,5 L0,10 Z" }));
-    defs.appendChild(marker);
-    svg.appendChild(defs);
     drawPanelFrame(svg);
     const stateLayer = el("g");
     svg.appendChild(stateLayer);
