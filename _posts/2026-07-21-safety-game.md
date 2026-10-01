@@ -197,4 +197,4 @@ The game-theoretic view also points to what comes next:
 - **Multi-turn games.** Real conversations are sequential, and a careful adversary can spread a harmful request over several turns.
 - **Multi-player Safety Games.** A user, a developer and a regulator all have a stake in what the model says, and their goals differ. The same machinery can balance several players rather than one safety budget.
 
-<script src="{{ '/assets/js/safety-game-post.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/safety-game-post.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
