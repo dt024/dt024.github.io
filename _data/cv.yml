@@ -35,7 +35,6 @@ cv:
         highlights:
           - "Supervisors: [Prof. Shugo Nakamura](https://www.toyo.ac.jp/staff/17018.html) (main) and [Prof. Hirotada Honda](https://www.toyo.ac.jp/staff/18012.html)"
           - "Research focus: graph neural networks, Transformers and applications of machine learning"
-          - Excellent Master's Thesis Award
 
       - institution: Toyo University
         area: Computer Science and Engineering
@@ -79,17 +78,21 @@ cv:
       - bullet: "**Tuan Nguyen**, Long Tran-Thanh. [Safety Game: Inference-Time Alignment of Black-Box LLMs via Constrained Optimization](https://openreview.net/forum?id=7Nn3SKS6yL). *International Conference on Machine Learning (ICML)*, 2026."
       - bullet: "Kiet Huynh, Minh Dao, **Tuan Nguyen**, Chi-Nguyen Tran, Phu-Hoa Pham, Quy Nguyen, Anh Han, Long Tran-Thanh. [Training-Free Cultural Alignment of Large Language Models via Persona Disagreement](https://arxiv.org/abs/2605.10843). *Advances in Neural Information Processing Systems (NeurIPS)*, 2026."
       - bullet: "**Tuan Nguyen**, Hirotada Honda, Takashi Sano, Vinh Nguyen, Shugo Nakamura, Tan Nguyen. [From Coupled Oscillators to Graph Neural Networks: Reducing Over-smoothing via a Kuramoto Model-based Approach](https://proceedings.mlr.press/v238/nguyen24c.html). *International Conference on Artificial Intelligence and Statistics (AISTATS)*, 2024."
+      - bullet: "Thien Nguyen, **Tuan Nguyen**, Son Hy, Risi Kondor. [Fast Temporal Wavelet Graph Neural Networks](https://arxiv.org/abs/2302.08643). *Temporal Graph Learning Workshop @ NeurIPS*, 2023."
       - bullet: "**Tuan Nguyen**, Minh Pham. [Multimodal Fusion with BERT and Attention Mechanism for Fake News Detection](https://ieeexplore.ieee.org/abstract/document/9642125). *RIVF International Conference on Computing and Communication Technologies*, 2021."
       - bullet: "**Tuan Nguyen**, Minh Pham. [ReINTEL Challenge 2020: A Multimodal Ensemble Model for Detecting Unreliable Information on Vietnamese SNS](https://arxiv.org/abs/2012.10267). *Proceedings of the 7th International Workshop on Vietnamese Language and Speech Processing (VLSP)*, 2020."
 
-    Awards and Scholarships:
-      - bullet: "**EPSRC Doctoral Scholarship**, University of Warwick: full tuition and a UKRI stipend of £20,780 per year for 3.5 years, for exceptional academic achievement and research potential."
-      - bullet: "**Toyo University Full-ride Scholarship**: full tuition and an annual stipend of nearly USD 12,000 for 4 years, for outstanding academic performance."
-      - bullet: "**Best Presentation Award**, 15th IEEE RIVF International Conference, 2021."
-      - bullet: "**Second Prize**, Automated Legal Question Answering Competition (ALQAC), 2021."
-      - bullet: "**Outstanding Solution**, Reliable Intelligence Identification on Vietnamese SNSs (ReINTEL) Competition, 2020."
-      - bullet: "Shopee Code League 2020: ranked **29/356** teams in Sentiment Analysis and **97/823** teams in Product Image Classification."
-      - bullet: "SIGNATE Student Cup 2019, House Price Prediction: ranked **39/300** teams."
-      - bullet: "**Bronze Prize**, HSGS Olympiad 2015 (nationwide competitive programming for specialised high school students)."
-      - bullet: "**Silver Prize**, Competitive Programming, Competition for Coastal and Northern Region Students in Vietnam, 2015."
-      - bullet: "**Third Prize**, Vietnam National University-Level Competitive Programming Competition, 2015 (earned exemption from the national university admission process)."
+    Scholarships:
+      - bullet: "**EPSRC Doctoral Scholarship**, University of Warwick: full tuition and stipend for 3.5 years"
+      - bullet: "**Full-ride Scholarship**, Toyo University: full tuition and stipend for 4 years"
+
+    Awards and Competitions:
+      - bullet: "**Excellent Master's Thesis Award**, Toyo University, 2024"
+      - bullet: "**Best Presentation Award**, IEEE RIVF, 2021"
+      - bullet: "**Second Prize**, Automated Legal Question Answering Competition (ALQAC), 2021"
+      - bullet: "**Outstanding Solution**, VLSP ReINTEL Challenge, 2020"
+      - bullet: "**Top 29 of 356 teams**, Shopee Code League, Sentiment Analysis, 2020"
+      - bullet: "**Top 39 of 300 teams**, SIGNATE Student Cup, House Price Prediction, 2019"
+      - bullet: "**Third Prize**, Vietnam National University Programming Contest, 2015 (exempt from university entrance exam)"
+      - bullet: "**Silver Prize**, Coastal and Northern Vietnam Student Programming Contest, 2015"
+      - bullet: "**Bronze Prize**, HSGS Olympiad in Competitive Programming, 2015"
