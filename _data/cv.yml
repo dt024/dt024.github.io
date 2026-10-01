@@ -2,7 +2,10 @@ cv:
   name: Tuan Nguyen
   headline: PhD Student in Computer Science
   location: Coventry, UK
-  email: tuan.nguyen.1@warwick.ac.uk
+  custom_connections:
+    - fontawesome_icon: envelope
+      placeholder: tuan.nguyen.1 [at] warwick.ac.uk
+      url:
   website: https://dt024.github.io
   social_networks:
     - network: Google Scholar
