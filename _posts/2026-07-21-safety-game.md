@@ -7,6 +7,7 @@ tags: llm-safety game-theory alignment
 categories: research
 related_posts: false
 related_publications: true
+og_image: https://dt024.github.io/assets/img/og/safety-game.png
 _styles: |
   .sg-figure { margin: 2rem 0; }
   .sg-figure svg { display: block; width: 100%; height: auto; }
@@ -57,7 +58,7 @@ Ask an AI assistant: _"How do I create a strong chemical reaction at home?"_ It 
 
 We obviously want the third one. The hard part is that the assistant has no idea **who is asking**. The same question comes from a curious twelve-year-old, a science teacher, and occasionally someone who wants to hurt people. An answer that is perfect for one of them is dangerous for another.
 
-Our ICML 2026 paper {% cite nguyen2026safety %} treats that uncertainty as what it really is: **a game against an opponent whose intentions you can't see.** Taking the game seriously turns out to tell us exactly how an assistant should pick its answer.
+Our [ICML 2026 paper](https://openreview.net/forum?id=7Nn3SKS6yL) {% cite nguyen2026safety %} treats that uncertainty as what it really is: **a game against an opponent whose intentions you can't see.** Taking the game seriously turns out to tell us exactly how an assistant should pick its answer.
 
 ## The fix has to live outside the model
 
@@ -65,13 +66,13 @@ The usual way to make a model safer is to retrain it (fine-tuning, RLHF). That w
 
 Most organisations can't do this at all. A small company, a hospital or a public body typically reaches an LLM through an API: text goes in, text comes out, and the weights are locked away. Newer "inference-time" safety methods avoid retraining, but most still need to reach inside the model, for example to steer its hidden activations.
 
-So we set ourselves a stricter goal: **a safety layer that treats the LLM as a black box.** It works with any model, needs no training, and can be switched to new rules on the day they change.
+So we set ourselves a stricter goal: **a safety layer that treats the LLM as a black box.** It works with any model, needs no training, and can be switched to new rules on the day they change. We later applied the same black-box idea to cultural values in [DISCA](/blog/2026/disca/).
 
 ## The spark: safe exploitation in poker
 
 Poker-playing AI has faced a version of this problem for years. A strong poker bot starts from a solid **baseline strategy** that no opponent can beat by much. Against a weak opponent it could win more by _adapting_, e.g. bluffing more against someone who folds too often. But adapting is dangerous: the "weak" opponent might be setting a trap, and the adapted strategy might be much easier to exploit than the baseline.
 
-Game theorists have a precise answer to this, known as **safe exploitation** or **adaptation safety** ([Brown & Sandholm, 2017](https://arxiv.org/abs/1705.02955); [Ge et al., 2024](https://proceedings.mlr.press/v235/ge24b.html)). _Adapt all you like, as long as the adapted strategy is never more exploitable than your baseline._ This line of work helped the Libratus bot beat top professionals at heads-up no-limit poker.
+Game theorists have a precise answer to this, known as **safe exploitation** or **adaptation safety** ([Brown & Sandholm, 2017](https://arxiv.org/abs/1705.02955); [Ge et al., 2024](https://proceedings.mlr.press/v235/ge24b.html)). _Adapt all you like, as long as the adapted strategy is never more exploitable than your baseline._ This line of work helped the [Libratus](https://www.science.org/doi/10.1126/science.aao1733) bot beat top professionals at heads-up no-limit poker.
 
 Our key observation is that an AI assistant is in the same position. Being more helpful than a flat refusal is a form of adapting to the user, and a user with bad intentions is exactly the kind of opponent who exploits it. So we carried the idea over one piece at a time:
 
