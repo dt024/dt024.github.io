@@ -126,30 +126,33 @@ layout: default
           </div>
         {% endif %}
 
-        <!-- RenderCV Sections - Merge Experience and Volunteer -->
+        <!-- RenderCV Sections (in cv.yml order) - Experience and Volunteer are merged -->
         {% comment %} First, combine Experience and Volunteer entries {% endcomment %}
         {% assign empty_array = '' | split: ',' %}
         {% assign exp = cv.sections.Experience | default: empty_array %}
         {% assign vol = cv.sections.Volunteer | default: empty_array %}
         {% assign combined_experience = exp | concat: vol %}
-        {% if combined_experience.size > 0 %}
-          <a class="anchor" id="experience"></a>
-          <div class="card mt-3 p-3">
-            <h3 class="card-title font-weight-medium">Experience</h3>
-            <div>
-              {% assign entries = combined_experience %}
-              {% include cv/experience.liquid %}
-            </div>
-          </div>
-        {% endif %}
 
-        {% comment %} Now render all other sections except Experience and Volunteer {% endcomment %}
+        {% comment %} Render every section in cv.yml order {% endcomment %}
         {% for section_pair in cv.sections %}
           {% assign section_title = section_pair[0] %}
           {% assign section_entries = section_pair[1] %}
 
-          {% comment %} Skip Experience and Volunteer as we've already processed them combined {% endcomment %}
+          {% comment %} Experience (merged with Volunteer) renders at Experience's position in cv.yml {% endcomment %}
+          {% if section_title == 'Volunteer' and exp.size > 0 %}
+            {% continue %}
+          {% endif %}
           {% if section_title == 'Experience' or section_title == 'Volunteer' %}
+            {% if combined_experience.size > 0 %}
+              <a class="anchor" id="experience"></a>
+              <div class="card mt-3 p-3">
+                <h3 class="card-title font-weight-medium">Experience</h3>
+                <div>
+                  {% assign entries = combined_experience %}
+                  {% include cv/experience.liquid %}
+                </div>
+              </div>
+            {% endif %}
             {% continue %}
           {% endif %}
 
