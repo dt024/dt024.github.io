@@ -34,7 +34,7 @@ ninja.data = [{
         
           title: "Steering LLMs across cultures by listening to disagreement",
         
-        description: "How four survey-grounded personas, and the disagreement between them, steer a frozen LLM toward a country&#39;s moral preferences without retraining.",
+        description: "How a panel of personas built from public survey data, and the disagreement between them, can steer an LLM toward a country&#39;s moral preferences without retraining.",
         section: "Posts",
         handler: () => {
           
