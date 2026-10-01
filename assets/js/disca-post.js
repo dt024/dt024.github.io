@@ -36,8 +36,8 @@
 
   const PRESETS = {
     start: [0.9, 0.6, 0.2, 0.55],
-    agree: [0.7, 0.6, 0.5, 0.6],
-    split: [1.4, 0.9, -0.9, 0.3],
+    agree: [0.9, 0.75, 0.35, 0.7],
+    split: [1.5, 1.2, -1.2, 0.5],
   };
 
   function lossAverse(z) {
@@ -73,8 +73,9 @@
   function solvePanel(positions) {
     const consensus = mean(positions);
     const trust = Math.exp(-spread(positions) / GATE_SCALE);
-    const final = consensus + trust * fineAdjustment(positions, consensus);
-    return { consensus, trust, final };
+    const proposed = fineAdjustment(positions, consensus);
+    const kept = trust * proposed;
+    return { consensus, trust, proposed, kept, final: consensus + kept };
   }
 
   function describeSpread(trust) {
@@ -89,7 +90,10 @@
 
   const P = { w: 600, left: 118, right: 24, rowH: 34, top: 18 };
   const ROWS = { default: 0, personas: 1, final: 5 };
-  const P_H = P.top + 6 * P.rowH + 44;
+  const AXIS_Y = P.top + 6 * P.rowH + 6;
+  const ZOOM = { guideTop: AXIS_Y + 28, guideBottom: AXIS_Y + 62, titleY: AXIS_Y + 80, y: AXIS_Y + 112, minHalf: 0.004, fill: 1.35 };
+  const P_H = ZOOM.y + 34;
+  const MAIN_SCALE = (P.w - P.left - P.right) / (DOMAIN[1] - DOMAIN[0]);
   const px = (v) => P.left + ((v - DOMAIN[0]) / (DOMAIN[1] - DOMAIN[0])) * (P.w - P.left - P.right);
   const rowY = (r) => P.top + r * P.rowH + P.rowH / 2;
   const toValue = (x) => {
@@ -98,7 +102,7 @@
   };
 
   function drawPanelFrame(svg) {
-    const axisY = rowY(5) + P.rowH / 2 + 6;
+    const axisY = AXIS_Y;
     [-2, -1, 0, 1, 2].forEach((t) => {
       svg.appendChild(el("line", { class: t === 0 ? "dc-zero" : "dc-grid", x1: px(t), x2: px(t), y1: P.top, y2: axisY }));
     });
@@ -137,6 +141,40 @@
     );
     layer.appendChild(el("circle", { class: "dc-final", cx: px(result.final), cy: fy, r: 9 }));
     layer.appendChild(el("path", { class: "dc-default dc-default--ghost", d: diamond(px(MODEL_DEFAULT), fy, 7) }));
+  }
+
+  // Close-up around the consensus: the extra step is small, so it is magnified
+  // here (the scale adapts to the proposed step and is labelled).
+  function drawCloseUp(layer, result) {
+    const x0 = P.left;
+    const x1 = P.w - P.right;
+    const xc = (x0 + x1) / 2;
+    const half = Math.max(Math.abs(result.proposed) * ZOOM.fill, ZOOM.minHalf);
+    const scale = (x1 - xc) / half;
+    const zx = (v) => xc + v * scale;
+    const magnification = scale / MAIN_SCALE;
+    const shown = magnification >= 100 ? Math.round(magnification / 10) * 10 : Math.round(magnification);
+    const y = ZOOM.y;
+
+    layer.appendChild(el("line", { class: "dc-zoom-guide", x1: px(result.consensus) - 4, y1: ZOOM.guideTop, x2: x0, y2: ZOOM.guideBottom }));
+    layer.appendChild(el("line", { class: "dc-zoom-guide", x1: px(result.consensus) + 4, y1: ZOOM.guideTop, x2: x1, y2: ZOOM.guideBottom }));
+    layer.appendChild(el("text", { class: "dc-zoom-title", x: x0, y: ZOOM.titleY }, `Close-up around the consensus (×${shown})`));
+    layer.appendChild(el("text", { class: "dc-zoom-title", x: x1, y: ZOOM.titleY, "text-anchor": "end" }, "○ proposed extra step   ● kept"));
+    layer.appendChild(el("line", { class: "dc-axis-line", x1: x0, x2: x1, y1: y, y2: y }));
+    layer.appendChild(el("line", { class: "dc-consensus", x1: xc, x2: xc, y1: y - 14, y2: y + 14 }));
+    layer.appendChild(el("text", { class: "dc-consensus-label", x: xc, y: y + 28, "text-anchor": "middle" }, "consensus"));
+    layer.appendChild(el("line", { class: "dc-dropped", x1: zx(result.kept), x2: zx(result.proposed), y1: y, y2: y }));
+    layer.appendChild(el("line", { class: "dc-kept-line", x1: xc, x2: zx(result.kept), y1: y, y2: y }));
+    const proposed = el("circle", { class: "dc-proposed", cx: zx(result.proposed), cy: y, r: 7 });
+    proposed.appendChild(el("title", {}, `Proposed extra step: ${signed(result.proposed)}`));
+    layer.appendChild(proposed);
+    const kept = el("circle", { class: "dc-final", cx: zx(result.kept), cy: y, r: 7 });
+    kept.appendChild(el("title", {}, `Kept: ${signed(result.kept)}`));
+    layer.appendChild(kept);
+  }
+
+  function signed(v) {
+    return `${v >= 0 ? "+" : "−"}${Math.abs(v).toFixed(3)}`;
   }
 
   function makeHandle(svg, index, getPositions, onChange) {
@@ -219,15 +257,18 @@
     const meter = root.querySelector(".dc-meter-fill");
     const spreadText = root.querySelector(".dc-spread");
     const keptText = root.querySelector(".dc-kept");
+    const stepText = root.querySelector(".dc-step");
 
     function render() {
       const result = solvePanel(positions);
       stateLayer.replaceChildren();
       drawPanelState(stateLayer, result);
+      drawCloseUp(stateLayer, result);
       handles.forEach((h) => h.place());
       meter.style.transform = `scaleX(${result.trust.toFixed(3)})`;
       spreadText.textContent = describeSpread(result.trust);
       keptText.textContent = `${Math.round(result.trust * 100)}%`;
+      stepText.textContent = `proposed ${signed(result.proposed)}, kept ${signed(result.kept)}`;
     }
 
     function update(index, value) {
