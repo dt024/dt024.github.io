@@ -68,13 +68,6 @@ ninja.data = [{
           title: 'A paper on training-free cultural alignment of LLMs via persona disagreement is accepted...',
           description: "",
           section: "News",},{
-        id: 'social-email',
-        title: 'email',
-        section: 'Socials',
-        handler: () => {
-          window.open("mailto:%74%75%61%6E.%6E%67%75%79%65%6E.%31@%77%61%72%77%69%63%6B.%61%63.%75%6B", "_blank");
-        },
-      },{
         id: 'social-scholar',
         title: 'Google Scholar',
         section: 'Socials',
