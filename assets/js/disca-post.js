@@ -27,7 +27,7 @@
   const ETA = 0.05;
   const GATE_SCALE = 0.6;
   const DOMAIN = [-2, 2];
-  const MODEL_DEFAULT = 0.2;
+  const MODEL_DEFAULT = 1.7;
 
   const PERSONAS = [
     { id: "young", name: "Young adults" },
@@ -37,9 +37,9 @@
   ];
 
   const PRESETS = {
-    start: [1.0, 0.8, 0.3, 0.6],
-    agree: [1.0, 1.0, 0.1, 0.3],
-    split: [1.0, 0.8, -1.8, -1.0],
+    start: [1.6, 1.3, 0.9, 1.1],
+    agree: [1.6, 1.5, 0.6, 0.7],
+    split: [1.6, 1.2, -1.4, -0.8],
   };
 
   function lossAverse(z) {
