@@ -14,18 +14,20 @@
   }
 
   // ---------------------------------------------------------------------------
-  // Panel maths (illustrative). Constants follow the paper's defaults where they
-  // exist (alpha, kappa, sigma, lambda, eta); GATE_SCALE is chosen for this axis.
+  // Panel maths (illustrative). Same mechanism as the paper: a loss-averse
+  // bargaining adjustment around the consensus, gated by the panel's spread.
+  // Prospect Theory's alpha and kappa follow Kahneman & Tversky; the other
+  // constants are tuned so the adjustment is visible on this axis.
   // ---------------------------------------------------------------------------
 
   const PT_ALPHA = 0.88;
   const PT_KAPPA = 2.25;
-  const SIGMA = 0.3;
-  const LAMBDA_COOP = 0.7;
-  const ETA = 0.5;
-  const GATE_SCALE = 0.25;
+  const SIGMA = 0.4;
+  const LAMBDA_COOP = 0;
+  const ETA = 0.05;
+  const GATE_SCALE = 0.6;
   const DOMAIN = [-2, 2];
-  const MODEL_DEFAULT = 1.5;
+  const MODEL_DEFAULT = 1.7;
 
   const PERSONAS = [
     { id: "young", name: "Young adults" },
@@ -35,9 +37,9 @@
   ];
 
   const PRESETS = {
-    start: [0.9, 0.6, 0.2, 0.55],
-    agree: [0.9, 0.75, 0.35, 0.7],
-    split: [1.5, 1.2, -1.2, 0.5],
+    start: [1.1, 0.8, 0.2, 0.7],
+    agree: [0.9, 0.9, 0.9, -0.1],
+    split: [1.6, 1.4, -1.4, 0.0],
   };
 
   function lossAverse(z) {
@@ -59,7 +61,7 @@
   function fineAdjustment(positions, consensus) {
     let weightSum = 0;
     let stepSum = 0;
-    for (let step = -0.9; step <= 0.9001; step += 0.01) {
+    for (let step = -2; step <= 2.0001; step += 0.01) {
       const x = consensus + step;
       const personaGain = mean(positions.map((p) => lossAverse((Math.abs(MODEL_DEFAULT - p) - Math.abs(x - p)) / SIGMA)));
       const panelGain = lossAverse((Math.abs(MODEL_DEFAULT - consensus) - Math.abs(x - consensus)) / SIGMA);
@@ -79,8 +81,8 @@
   }
 
   function describeSpread(trust) {
-    if (trust > 0.8) return "low: the panel largely agrees";
-    if (trust > 0.35) return "moderate";
+    if (trust > 0.6) return "low: the panel mostly agrees";
+    if (trust > 0.3) return "moderate";
     return "high: the panel is split";
   }
 
@@ -91,9 +93,7 @@
   const P = { w: 600, left: 118, right: 24, rowH: 34, top: 18 };
   const ROWS = { default: 0, personas: 1, final: 5 };
   const AXIS_Y = P.top + 6 * P.rowH + 6;
-  const ZOOM = { guideTop: AXIS_Y + 28, guideBottom: AXIS_Y + 62, titleY: AXIS_Y + 80, y: AXIS_Y + 112, minHalf: 0.004, fill: 1.35 };
-  const P_H = ZOOM.y + 34;
-  const MAIN_SCALE = (P.w - P.left - P.right) / (DOMAIN[1] - DOMAIN[0]);
+  const P_H = AXIS_Y + 50;
   const px = (v) => P.left + ((v - DOMAIN[0]) / (DOMAIN[1] - DOMAIN[0])) * (P.w - P.left - P.right);
   const rowY = (r) => P.top + r * P.rowH + P.rowH / 2;
   const toValue = (x) => {
@@ -109,6 +109,13 @@
     svg.appendChild(el("line", { class: "dc-axis-line", x1: px(-2), x2: px(2), y1: axisY, y2: axisY }));
     svg.appendChild(el("text", { class: "dc-axis", x: px(-2), y: axisY + 18 }, "← spare the older group"));
     svg.appendChild(el("text", { class: "dc-axis", x: px(2), y: axisY + 18, "text-anchor": "end" }, "spare the younger group →"));
+    svg.appendChild(
+      el(
+        "text",
+        { class: "dc-zoom-title", x: (px(-2) + px(2)) / 2, y: axisY + 42, "text-anchor": "middle" },
+        "◆ model default   ○ adjustment proposed by the bargaining   ● DISCA's answer"
+      )
+    );
     const labels = ["Model default", ...PERSONAS.map((p) => p.name), "DISCA answer"];
     labels.forEach((label, r) => {
       const cls = r === ROWS.final ? "dc-row dc-row--strong" : "dc-row";
@@ -127,7 +134,7 @@
     const top = rowY(1) - P.rowH / 2 + 4;
     const bottom = rowY(4) + P.rowH / 2 - 4;
     layer.appendChild(el("line", { class: "dc-consensus", x1: px(result.consensus), x2: px(result.consensus), y1: top, y2: rowY(ROWS.final) }));
-    layer.appendChild(el("text", { class: "dc-consensus-label", x: px(result.consensus) + 6, y: bottom + 4 }, "consensus"));
+    layer.appendChild(el("text", { class: "dc-consensus-label", x: px(result.consensus) + 6, y: bottom + 4 }, "plain average"));
     const fy = rowY(ROWS.final);
     layer.appendChild(
       el("line", {
@@ -139,42 +146,15 @@
         "marker-end": "url(#dc-arrow)",
       })
     );
-    layer.appendChild(el("circle", { class: "dc-final", cx: px(result.final), cy: fy, r: 9 }));
-    layer.appendChild(el("path", { class: "dc-default dc-default--ghost", d: diamond(px(MODEL_DEFAULT), fy, 7) }));
-  }
-
-  // Close-up around the consensus: the extra step is small, so it is magnified
-  // here (the scale adapts to the proposed step and is labelled).
-  function drawCloseUp(layer, result) {
-    const x0 = P.left;
-    const x1 = P.w - P.right;
-    const xc = (x0 + x1) / 2;
-    const half = Math.max(Math.abs(result.proposed) * ZOOM.fill, ZOOM.minHalf);
-    const scale = (x1 - xc) / half;
-    const zx = (v) => xc + v * scale;
-    const magnification = scale / MAIN_SCALE;
-    const shown = magnification >= 100 ? Math.round(magnification / 10) * 10 : Math.round(magnification);
-    const y = ZOOM.y;
-
-    layer.appendChild(el("line", { class: "dc-zoom-guide", x1: px(result.consensus) - 4, y1: ZOOM.guideTop, x2: x0, y2: ZOOM.guideBottom }));
-    layer.appendChild(el("line", { class: "dc-zoom-guide", x1: px(result.consensus) + 4, y1: ZOOM.guideTop, x2: x1, y2: ZOOM.guideBottom }));
-    layer.appendChild(el("text", { class: "dc-zoom-title", x: x0, y: ZOOM.titleY }, `Close-up around the consensus (×${shown})`));
-    layer.appendChild(el("text", { class: "dc-zoom-title", x: x1, y: ZOOM.titleY, "text-anchor": "end" }, "○ proposed extra step   ● kept"));
-    layer.appendChild(el("line", { class: "dc-axis-line", x1: x0, x2: x1, y1: y, y2: y }));
-    layer.appendChild(el("line", { class: "dc-consensus", x1: xc, x2: xc, y1: y - 14, y2: y + 14 }));
-    layer.appendChild(el("text", { class: "dc-consensus-label", x: xc, y: y + 28, "text-anchor": "middle" }, "consensus"));
-    layer.appendChild(el("line", { class: "dc-dropped", x1: zx(result.kept), x2: zx(result.proposed), y1: y, y2: y }));
-    layer.appendChild(el("line", { class: "dc-kept-line", x1: xc, x2: zx(result.kept), y1: y, y2: y }));
-    const proposed = el("circle", { class: "dc-proposed", cx: zx(result.proposed), cy: y, r: 7 });
-    proposed.appendChild(el("title", {}, `Proposed extra step: ${signed(result.proposed)}`));
+    const proposedX = px(result.consensus + result.proposed);
+    layer.appendChild(el("line", { class: "dc-dropped", x1: px(result.final), x2: proposedX, y1: fy, y2: fy }));
+    const proposed = el("circle", { class: "dc-proposed", cx: proposedX, cy: fy, r: 8 });
+    proposed.appendChild(el("title", {}, "Adjustment proposed by the bargaining"));
     layer.appendChild(proposed);
-    const kept = el("circle", { class: "dc-final", cx: zx(result.kept), cy: y, r: 7 });
-    kept.appendChild(el("title", {}, `Kept: ${signed(result.kept)}`));
-    layer.appendChild(kept);
-  }
-
-  function signed(v) {
-    return `${v >= 0 ? "+" : "−"}${Math.abs(v).toFixed(3)}`;
+    const final = el("circle", { class: "dc-final", cx: px(result.final), cy: fy, r: 9 });
+    final.appendChild(el("title", {}, "DISCA's answer"));
+    layer.appendChild(final);
+    layer.appendChild(el("path", { class: "dc-default dc-default--ghost", d: diamond(px(MODEL_DEFAULT), fy, 7) }));
   }
 
   function makeHandle(svg, index, getPositions, onChange) {
@@ -257,18 +237,15 @@
     const meter = root.querySelector(".dc-meter-fill");
     const spreadText = root.querySelector(".dc-spread");
     const keptText = root.querySelector(".dc-kept");
-    const stepText = root.querySelector(".dc-step");
 
     function render() {
       const result = solvePanel(positions);
       stateLayer.replaceChildren();
       drawPanelState(stateLayer, result);
-      drawCloseUp(stateLayer, result);
       handles.forEach((h) => h.place());
       meter.style.transform = `scaleX(${result.trust.toFixed(3)})`;
       spreadText.textContent = describeSpread(result.trust);
       keptText.textContent = `${Math.round(result.trust * 100)}%`;
-      stepText.textContent = `proposed ${signed(result.proposed)}, kept ${signed(result.kept)}`;
     }
 
     function update(index, value) {
