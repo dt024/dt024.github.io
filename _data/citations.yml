@@ -1,5 +1,5 @@
 metadata:
-  last_updated: '2026-09-30'
+  last_updated: '2026-10-14'
 papers:
   tVVJ8I8AAAAJ:4DMP91E08xMC:
     citations: 7
@@ -34,7 +34,7 @@ papers:
     title: 'Safety Game: Inference-Time Alignment of Black-Box LLMs via Constrained Optimization'
     year: '2025'
   tVVJ8I8AAAAJ:mVmsd5A6BfQC:
-    citations: 30
+    citations: 31
     title: 'From coupled oscillators to graph neural networks: Reducing over-smoothing via a kuramoto model-based approach'
     year: '2024'
   tVVJ8I8AAAAJ:qxL8FJ1GzNcC:
