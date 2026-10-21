@@ -1,5 +1,5 @@
 metadata:
-  last_updated: '2026-10-14'
+  last_updated: '2026-10-21'
 papers:
   tVVJ8I8AAAAJ:4DMP91E08xMC:
     citations: 7
@@ -14,7 +14,7 @@ papers:
     title: p-Laplacian Transformer
     year: '2023'
   tVVJ8I8AAAAJ:M3ejUd6NZC8C:
-    citations: 70
+    citations: 71
     title: Multimodal fusion with BERT and attention mechanism for fake news detection
     year: '2021'
   tVVJ8I8AAAAJ:Wp0gIr-vW9MC:
