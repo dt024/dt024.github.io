@@ -1,5 +1,5 @@
 metadata:
-  last_updated: '2026-10-21'
+  last_updated: '2026-10-26'
 papers:
   tVVJ8I8AAAAJ:4DMP91E08xMC:
     citations: 7
@@ -25,14 +25,14 @@ papers:
     citations: 0
     title: Training-Free Cultural Alignment of Large Language Models via Persona Disagreement
     year: '2026'
+  tVVJ8I8AAAAJ:_Qo2XoVZTnwC:
+    citations: 0
+    title: 'Safety Game: Inference-Time Alignment of Black-Box LLMs via Constrained Optimization'
+    year: '2025'
   tVVJ8I8AAAAJ:aqlVkmm33-oC:
     citations: 6
     title: 'Aimelaw at alqac 2021: Enriching neural network models with legal-domain knowledge'
     year: '2021'
-  tVVJ8I8AAAAJ:hC7cP41nSMkC:
-    citations: 0
-    title: 'Safety Game: Inference-Time Alignment of Black-Box LLMs via Constrained Optimization'
-    year: '2025'
   tVVJ8I8AAAAJ:mVmsd5A6BfQC:
     citations: 31
     title: 'From coupled oscillators to graph neural networks: Reducing over-smoothing via a kuramoto model-based approach'
