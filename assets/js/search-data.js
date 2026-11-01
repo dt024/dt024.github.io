@@ -30,7 +30,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/blog/";
           },
-        },{id: "post-steering-llms-across-cultures-by-listening-to-disagreement",
+        },{id: "post-coupled-not-combined-when-helpfulness-and-safety-conflict-inside-one-answer",
+        
+          title: "Coupled, not combined: when helpfulness and safety conflict inside one answer",
+        
+        description: "Scoring an answer&#39;s helpfulness and safety separately can miss whether its helpful part respects its safety part. Scoring them in pairs, and counting each idea once, is a start.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/coupled-not-combined/";
+          
+        },
+      },{id: "post-steering-llms-across-cultures-by-listening-to-disagreement",
         
           title: "Steering LLMs across cultures by listening to disagreement",
         
