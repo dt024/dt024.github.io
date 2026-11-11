@@ -1,5 +1,5 @@
 metadata:
-  last_updated: '2026-11-04'
+  last_updated: '2026-11-11'
 papers:
   tVVJ8I8AAAAJ:4DMP91E08xMC:
     citations: 7
@@ -34,7 +34,7 @@ papers:
     title: 'Aimelaw at alqac 2021: Enriching neural network models with legal-domain knowledge'
     year: '2021'
   tVVJ8I8AAAAJ:mVmsd5A6BfQC:
-    citations: 31
+    citations: 33
     title: 'From coupled oscillators to graph neural networks: Reducing over-smoothing via a kuramoto model-based approach'
     year: '2024'
   tVVJ8I8AAAAJ:qxL8FJ1GzNcC:
